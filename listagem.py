@@ -23,7 +23,7 @@ for (root, dirs, arquivos) in os.walk(servdor, topdown=True):
 
     # Write list to TXT file
 
-    with open('teste.txt', 'w') as f:
+    with open('results.txt', 'w') as f:
         for item in compilado:
             f.write("%s\n" % item)
 
