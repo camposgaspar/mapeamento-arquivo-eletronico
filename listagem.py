@@ -1,11 +1,10 @@
 import os
 from datetime import datetime
 
-servdor = input("Local: ")
-pasta_servidor = os.listdir(servdor)
+servidor = input("Local: ")
 compilado = []
 
-for (root, dirs, arquivos) in os.walk(servdor, topdown=True):
+for (root, dirs, arquivos) in os.walk(servidor, topdown=True):
     for arquivo in arquivos:
         os.path.splitext(arquivo)
         extensao = os.path.splitext(arquivo)[-1]
