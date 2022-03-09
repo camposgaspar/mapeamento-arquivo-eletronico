@@ -1,41 +1,34 @@
 import os
-from datetime import datetime
+import re
 
 servidor = input("Local: ")
-compilado = []
+comp = []
+number = None
 
-for (root, dirs, arquivos) in os.walk(servidor, topdown=True):
-    for arquivo in arquivos:
-        os.path.splitext(arquivo)
-        extensao = os.path.splitext(arquivo)[-1]
+# Walk and read file names
+for (root, dirs, files) in os.walk(servidor, topdown=True):
+    for file in files:
+        path = str(root)
+        extension = str(file).split(".")[-1]
+        client = str(root).split("\\")[5]
 
-        # Ignores Windows files
-
-        if arquivo == "thumbs.db" or arquivo == "Thumbs.db":
+        # If Windows system file, ignore
+        if file.lower() == "thumbs.db":
             pass
 
-        # Append to list
         else:
-            texto = f"{root}${arquivo}${extensao}"
-            compilado.append(texto)
-            print(f"{arquivo}")
+            # Check if has contract number
+            try:
+                number = re.search(r'((400)\w{5})', file)[0]
+            except:
+                number = None
+            # Compile results
+            result = f"{number}|{client}|{file}|{extension}"
+            comp.append(result)
+
+        print(file)
 
     # Write list to TXT file
-
     with open('results.txt', 'w') as f:
-        for item in compilado:
+        for item in comp:
             f.write("%s\n" % item)
-
-        # Caso queira ignorar os arquivo .PDF
-
-        # if arquivo.endswith((".pdf", ".PDF")):
-        #     pass
-        # else:
-        #     texto = f"{root}$ {arquivo}"
-        #     compilado.append(texto)
-        #     hm = datetime.now()
-        #     print(f" {arquivo}")
-        #
-        #     with open('teste.txt', 'w') as f:
-        #         for item in compilado:
-        #             f.write("%s\n" % item)
