@@ -8,9 +8,12 @@ number = None
 # Walk and read file names
 for (root, dirs, files) in os.walk(servidor, topdown=True):
     for file in files:
-        path = str(root)
+        path = root
         extension = str(file).split(".")[-1]
-        client = str(root).split("\\")[5]
+        try:
+            client = str(root).split("\\")[5]
+        except:
+            client = None
 
         # If Windows system file, ignore
         if file.lower() == "thumbs.db":
@@ -19,11 +22,11 @@ for (root, dirs, files) in os.walk(servidor, topdown=True):
         else:
             # Check if has contract number
             try:
-                number = re.search(r'((400)\w{5})', file)[0]
+                number = re.search(r'(((400)\w{5}))|(\d{7,})', file)[0]
             except:
                 number = None
             # Compile results
-            result = f"{number}|{client}|{file}|{extension}"
+            result = f"{number}|{client}|{file}|{extension}|{path}"
             comp.append(result)
 
         print(file)
