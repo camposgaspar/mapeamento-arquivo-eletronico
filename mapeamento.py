@@ -31,7 +31,7 @@ for (root, dirs, files) in os.walk(servidor, topdown=True):
 
         print(file)
 
-    # Write list to TXT file
-    with open('results.txt', 'w') as f:
-        for item in comp:
-            f.write("%s\n" % item)
+# Write list to TXT file
+with open('results.txt', 'w') as f:
+    for item in comp:
+        f.write("%s\n" % item)
